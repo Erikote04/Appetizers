@@ -22,7 +22,7 @@ struct AppetizersTabView: View {
                 AccountView()
             }
         }
-        .accentColor(Color("primary"))
+        .accentColor(Color("appetizersPrimary"))
     }
 }
 
