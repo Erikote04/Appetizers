@@ -7,7 +7,11 @@
 
 import Foundation
 
-final class NetworkManager {
+protocol NetworkManagerProtocol {
+    func getAppetizers(completion: @escaping (Result<[AppetizerItem], AppetizersError>) -> Void)
+}
+
+final class NetworkManager: NetworkManagerProtocol {
     static let shared = NetworkManager()
     static let baseURL = "https://seanallen-course-backend.herokuapp.com/swiftui-fundamentals/appetizers"
     
@@ -20,7 +24,7 @@ final class NetworkManager {
         }
         
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
-            guard let _ = error else {
+            if let _ = error {
                 completion(.failure(.enableToConnect))
                 return
             }
