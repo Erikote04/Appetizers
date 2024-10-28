@@ -11,6 +11,7 @@ final class AppetizersViewModel: ObservableObject {
     
     // MARK: Published
     @Published var appetizers: [AppetizerItem] = []
+    @Published var alertItem: AlertItem?
     
     // MARK: Properties
     private let networkManager: NetworkManager
@@ -22,13 +23,22 @@ final class AppetizersViewModel: ObservableObject {
     
     // MARK: Functions
     func getAppetizers() {
-        networkManager.getAppetizers { result in
+        networkManager.getAppetizers { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let appetizers):
-                    self.appetizers = appetizers
+                    self?.appetizers = appetizers
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    switch error {
+                    case .invalidURL:
+                        self?.alertItem = AlertContext.invalidURL
+                    case .invalidResponse:
+                        self?.alertItem = AlertContext.invalidResponse
+                    case .invalidData:
+                        self?.alertItem = AlertContext.invalidData
+                    case .enableToConnect:
+                        self?.alertItem = AlertContext.enabledToComplete
+                    }
                 }
             }
         }
