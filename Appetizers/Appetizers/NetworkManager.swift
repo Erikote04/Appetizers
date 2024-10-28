@@ -5,7 +5,7 @@
 //  Created by Erik Sebastian de Erice Jerez on 23/10/24.
 //
 
-import Foundation
+import UIKit
 
 protocol NetworkManagerProtocol {
     func getAppetizers(completion: @escaping (Result<[AppetizerItem], AppetizersError>) -> Void)
@@ -14,6 +14,8 @@ protocol NetworkManagerProtocol {
 final class NetworkManager: NetworkManagerProtocol {
     static let shared = NetworkManager()
     static let baseURL = "https://seanallen-course-backend.herokuapp.com/swiftui-fundamentals/appetizers"
+    
+    private let cache = NSCache<NSString, UIImage>()
     
     private init() {}
     
@@ -45,6 +47,32 @@ final class NetworkManager: NetworkManagerProtocol {
             } catch {
                 completion(.failure(.invalidData))
             }
+        }
+        
+        task.resume()
+    }
+    
+    func downloadImage(url: String, completion: @escaping (UIImage?) -> Void) {
+        let cacheKey = NSString(string: url)
+        
+        if let image = cache.object(forKey: cacheKey) {
+            completion(image)
+            return
+        }
+        
+        guard let url = URL(string: url) else {
+            completion(nil)
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let data, let image = UIImage(data: data) else {
+                completion(nil)
+                return
+            }
+            
+            self?.cache.setObject(image, forKey: cacheKey)
+            completion(image)
         }
         
         task.resume()
