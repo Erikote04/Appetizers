@@ -12,6 +12,7 @@ final class AppetizersViewModel: ObservableObject {
     // MARK: Published
     @Published var appetizers: [AppetizerItem] = []
     @Published var alertItem: AlertItem?
+    @Published var isLoading: Bool = false
     
     // MARK: Properties
     private let networkManager: NetworkManager
@@ -23,8 +24,11 @@ final class AppetizersViewModel: ObservableObject {
     
     // MARK: Functions
     func getAppetizers() {
+        isLoading = true
+        
         networkManager.getAppetizers { [weak self] result in
             DispatchQueue.main.async {
+                self?.isLoading = false
                 switch result {
                 case .success(let appetizers):
                     self?.appetizers = appetizers

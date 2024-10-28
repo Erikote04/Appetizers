@@ -11,15 +11,21 @@ struct AppetizerListView: View {
     @StateObject var viewModel = AppetizersViewModel()
     
     var body: some View {
-        NavigationStack {
-            List(viewModel.appetizers) { appetizer in
-                AppetizerListRowView(appetizer: appetizer)
+        ZStack {
+            NavigationStack {
+                List(viewModel.appetizers) { appetizer in
+                    AppetizerListRowView(appetizer: appetizer)
+                }
+                .navigationTitle("Appetizers")
+                .listStyle(.plain)
             }
-            .navigationTitle("Appetizers")
-            .listStyle(.plain)
-        }
-        .onAppear {
-            viewModel.getAppetizers()
+            .onAppear {
+                viewModel.getAppetizers()
+            }
+            
+            if viewModel.isLoading {
+                LoadingView()
+            }
         }
         .alert(item: $viewModel.alertItem) { alert in
             Alert(
