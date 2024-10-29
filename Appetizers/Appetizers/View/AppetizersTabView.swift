@@ -19,7 +19,7 @@ struct AppetizersTabView: View {
             }
             
             Tab("Account", systemImage: "person.fill") {
-                AccountView()
+                ProfileView()
             }
         }
         .accentColor(.brandPrimary)
