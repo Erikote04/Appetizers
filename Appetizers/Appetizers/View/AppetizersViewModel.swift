@@ -13,6 +13,8 @@ final class AppetizersViewModel: ObservableObject {
     @Published var appetizers: [AppetizerItem] = []
     @Published var alertItem: AlertItem?
     @Published var isLoading: Bool = false
+    @Published var selectedItem: AppetizerItem?
+    @Published var isShowingDetail: Bool = false
     
     // MARK: Properties
     private let networkManager: NetworkManager

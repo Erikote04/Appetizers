@@ -15,6 +15,10 @@ struct AppetizerListView: View {
             NavigationStack {
                 List(viewModel.appetizers) { appetizer in
                     AppetizerListRowView(appetizer: appetizer)
+                        .onTapGesture {
+                            viewModel.isShowingDetail = true
+                            viewModel.selectedItem = appetizer
+                        }
                 }
                 .navigationTitle("Appetizers")
                 .listStyle(.plain)
@@ -33,6 +37,9 @@ struct AppetizerListView: View {
                 message: alert.message,
                 dismissButton: alert.dismissButton
             )
+        }
+        .fullScreenCover(isPresented: $viewModel.isShowingDetail) {
+            AppetizerDetailView(appetizer: viewModel.selectedItem!)
         }
     }
 }

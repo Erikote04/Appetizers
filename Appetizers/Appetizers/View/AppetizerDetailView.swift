@@ -15,17 +15,16 @@ struct AppetizerDetailView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
-                Image("asian-flank-steak")
-                    .resizable()
+                AppetizerRemoteImage(url: appetizer.imageURL)
                     .scaledToFit()
                     .frame(maxWidth: .infinity)
                 
                 Text(appetizer.name)
                     .font(.title.bold())
-                    .padding()
                 
                 Text(appetizer.description)
                     .font(.body)
+                    .padding()
                     .multilineTextAlignment(.center)
                 
                 HStack(spacing: 32) {
