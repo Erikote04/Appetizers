@@ -15,15 +15,15 @@ struct ProfileView: View {
             VStack {
                 Form {
                     Section("Personal information") {
-                        TextField("First Name", text: $viewModel.firstName)
+                        TextField("First Name", text: $viewModel.user.firstName)
                         
-                        TextField("Last Name", text: $viewModel.lastName)
+                        TextField("Last Name", text: $viewModel.user.lastName)
                         
-                        TextField("Email", text: $viewModel.email)
+                        TextField("Email", text: $viewModel.user.email)
                             .keyboardType(.emailAddress)
                             .textInputAutocapitalization(.never)
                         
-                        DatePicker("Birth Date", selection: $viewModel.birthDate, displayedComponents: .date)
+                        DatePicker("Birth Date", selection: $viewModel.user.birthDate, displayedComponents: .date)
                         
                         Button("Save Changes") {
                             viewModel.saveChanges()
@@ -31,13 +31,16 @@ struct ProfileView: View {
                     }
                     
                     Section("Request") {
-                        Toggle("Extra Napkings", isOn: $viewModel.hasExtraNapkins)
-                        Toggle("Frequent Refill", isOn: $viewModel.hasFrequentRefill)
+                        Toggle("Extra Napkings", isOn: $viewModel.user.hasExtraNapkins)
+                        Toggle("Frequent Refill", isOn: $viewModel.user.hasFrequentRefill)
                     }
                     .tint(.brandPrimary)
                 }
             }
             .navigationTitle("Account")
+        }
+        .onAppear {
+            viewModel.retreiveUser()
         }
         .alert(item: $viewModel.alertItem) { alert in
             Alert(

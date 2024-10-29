@@ -15,6 +15,9 @@ struct AlertItem: Identifiable {
 }
 
 struct AlertContext {
+    
+    // MARK: Network
+    
     static let invalidURL = AlertItem(
         title: Text("Server Error"),
         message: Text("The data received from the server was invalid. Please contact support."),
@@ -39,6 +42,8 @@ struct AlertContext {
         dismissButton: .default(Text("OK"))
     )
     
+    // MARK: Profile
+    
     static let invalidForm = AlertItem(
         title: Text("Invalid Form"),
         message: Text("Please fill out all fields."),
@@ -48,6 +53,18 @@ struct AlertContext {
     static let invalidEmail = AlertItem(
         title: Text("Invalid Email"),
         message: Text("Please enter a valid email address."),
+        dismissButton: .default(Text("OK"))
+    )
+    
+    static let userSavedSuccesfully = AlertItem(
+        title: Text("Profile Saved"),
+        message: Text("Your profile information has been saved successfully."),
+        dismissButton: .default(Text("OK"))
+    )
+    
+    static let invalidUserData = AlertItem(
+        title: Text("Profile Error"),
+        message: Text("There was an error saving or retrieving your profile information. Please try again later or contact support."),
         dismissButton: .default(Text("OK"))
     )
 }
