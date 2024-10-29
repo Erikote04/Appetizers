@@ -39,7 +39,12 @@ struct ProfileView: View {
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
                     
-                    DatePicker("Birth Date", selection: $viewModel.user.birthDate, displayedComponents: .date)
+                    DatePicker(
+                        "Birth Date",
+                        selection: $viewModel.user.birthDate,
+                        in: Date().maxAge...Date().minAge,
+                        displayedComponents: .date
+                    )
                     
                     Button("Save Changes") {
                         viewModel.saveChanges()

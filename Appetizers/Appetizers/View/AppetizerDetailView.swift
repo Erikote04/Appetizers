@@ -29,9 +29,9 @@ struct AppetizerDetailView: View {
                     .multilineTextAlignment(.center)
                 
                 HStack(spacing: 32) {
-                    NutritionDetailView(title: "Calories", value: appetizer.calories)
-                    NutritionDetailView(title: "Carbs", value: appetizer.carbs)
-                    NutritionDetailView(title: "Protein", value: appetizer.protein)
+                    NutritionDetailView(title: "Calories", value: "\(appetizer.calories)")
+                    NutritionDetailView(title: "Carbs", value: "\(appetizer.carbs) g")
+                    NutritionDetailView(title: "Protein", value: "\(appetizer.protein) g")
                 }
                 .padding(.top, 24)
                 
