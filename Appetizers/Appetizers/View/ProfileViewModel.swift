@@ -45,7 +45,7 @@ final class ProfileViewModel: ObservableObject {
     }
     
     func retreiveUser() {
-        guard let userData = userData else { return }
+        guard let userData else { return }
         
         do {
             user = try JSONDecoder().decode(User.self, from: userData)
