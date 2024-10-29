@@ -9,35 +9,55 @@ import SwiftUI
 
 struct ProfileView: View {
     @StateObject var viewModel = ProfileViewModel()
+    @FocusState private var focusedTextField: FormTextField?
+    
+    enum FormTextField {
+        case firstName
+        case lastName
+        case email
+    }
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Form {
-                    Section("Personal information") {
-                        TextField("First Name", text: $viewModel.user.firstName)
-                        
-                        TextField("Last Name", text: $viewModel.user.lastName)
-                        
-                        TextField("Email", text: $viewModel.user.email)
-                            .keyboardType(.emailAddress)
-                            .textInputAutocapitalization(.never)
-                        
-                        DatePicker("Birth Date", selection: $viewModel.user.birthDate, displayedComponents: .date)
-                        
-                        Button("Save Changes") {
-                            viewModel.saveChanges()
-                        }
-                    }
+            Form {
+                Section("Personal information") {
+                    TextField("First Name", text: $viewModel.user.firstName)
+                        .focused($focusedTextField, equals: .firstName)
+                        .onSubmit { focusedTextField = .lastName }
+                        .submitLabel(.next)
                     
-                    Section("Request") {
-                        Toggle("Extra Napkings", isOn: $viewModel.user.hasExtraNapkins)
-                        Toggle("Frequent Refill", isOn: $viewModel.user.hasFrequentRefill)
+                    TextField("Last Name", text: $viewModel.user.lastName)
+                        .focused($focusedTextField, equals: .lastName)
+                        .onSubmit { focusedTextField = .email }
+                        .submitLabel(.next)
+                    
+                    TextField("Email", text: $viewModel.user.email)
+                        .focused($focusedTextField, equals: .email)
+                        .onSubmit { focusedTextField = nil }
+                        .submitLabel(.continue)
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                    
+                    DatePicker("Birth Date", selection: $viewModel.user.birthDate, displayedComponents: .date)
+                    
+                    Button("Save Changes") {
+                        viewModel.saveChanges()
                     }
-                    .tint(.accentColor)
                 }
+                
+                Section("Request") {
+                    Toggle("Extra Napkings", isOn: $viewModel.user.hasExtraNapkins)
+                    Toggle("Frequent Refill", isOn: $viewModel.user.hasFrequentRefill)
+                }
+                .tint(.accentColor)
             }
             .navigationTitle("Account")
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Button("Dismiss") { focusedTextField = nil }
+                }
+            }
         }
         .onAppear {
             viewModel.retreiveUser()
