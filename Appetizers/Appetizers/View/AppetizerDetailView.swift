@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct AppetizerDetailView: View {
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var order: Order
+    
     let appetizer: AppetizerItem
     
     var body: some View {
@@ -37,12 +40,16 @@ struct AppetizerDetailView: View {
             .overlay(DismissButton(), alignment: .topTrailing)
             
             PrimaryButton(text: "$\(appetizer.price, specifier: "%.2f") - Add to order") {
-                // add to order
+                order.add(appetizer)
+                dismiss()
             }
         }
     }
 }
 
 #Preview {
+    var order = Order()
+    
     AppetizerDetailView(appetizer: MockData.sampleAppetizer)
+        .environmentObject(order)
 }
