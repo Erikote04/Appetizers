@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct AppetizerDetailView: View {
-    @Environment(\.dismiss) var dismiss
-    
     let appetizer: AppetizerItem
     
     var body: some View {
@@ -28,63 +26,19 @@ struct AppetizerDetailView: View {
                     .multilineTextAlignment(.center)
                 
                 HStack(spacing: 32) {
-                    VStack(spacing: 8) {
-                        Text("Calories")
-                            .font(.caption.bold())
-                        
-                        Text("\(appetizer.calories)")
-                            .fontWeight(.semibold).italic()
-                            .foregroundStyle(.secondary)
-                    }
-                    
-                    VStack(spacing: 8) {
-                        Text("Carbs")
-                            .font(.caption.bold())
-                        
-                        Text("\(appetizer.carbs) g")
-                            .fontWeight(.semibold).italic()
-                            .foregroundStyle(.secondary)
-                    }
-                    
-                    VStack(spacing: 8) {
-                        Text("Protein")
-                            .font(.caption.bold())
-                        
-                        Text("\(appetizer.protein) g")
-                            .fontWeight(.semibold).italic()
-                            .foregroundStyle(.secondary)
-                    }
+                    NutritionDetailView(title: "Calories", value: appetizer.calories)
+                    NutritionDetailView(title: "Carbs", value: appetizer.carbs)
+                    NutritionDetailView(title: "Protein", value: appetizer.protein)
                 }
                 .padding(.top, 24)
                 
                 Spacer()
             }
-            .overlay(
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark")
-                        .padding()
-                        .foregroundStyle(.black)
-                        .background(.thinMaterial)
-                        .clipShape(.circle)
-                }.padding(),
-                alignment: .topTrailing
-            )
+            .overlay(DismissButton(), alignment: .topTrailing)
             
-            Button {
-                // Add to order
-            } label: {
-                Text("$\(appetizer.price, specifier: "%.2f") - Add to order")
-                    .font(.title3.bold())
-                    .padding()
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.brandPrimary)
-                    .clipShape(.rect(cornerRadius: 12))
-                
+            PrimaryButton(text: "$\(appetizer.price, specifier: "%.2f") - Add to order") {
+                // add to order
             }
-            .padding()
         }
     }
 }
