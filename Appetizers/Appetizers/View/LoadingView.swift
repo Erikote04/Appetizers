@@ -14,7 +14,7 @@ struct LoadingView: View {
             
             ProgressView()
                 .progressViewStyle(.circular)
-                .tint(.brandPrimary)
+                .tint(.accentColor)
                 .scaleEffect(2)
         }
     }

@@ -16,14 +16,14 @@ struct PrimaryButton: View {
             action()
         } label: {
             Text(text)
-                .font(.title3.bold())
                 .padding()
-                .foregroundStyle(.white)
+                .font(.title3.bold())
                 .frame(maxWidth: .infinity)
-                .background(Color.brandPrimary)
                 .clipShape(.rect(cornerRadius: 12))
             
         }
+        .buttonStyle(.bordered)
+        .tint(.accentColor)
         .padding()
     }
 }

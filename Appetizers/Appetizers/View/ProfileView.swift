@@ -34,7 +34,7 @@ struct ProfileView: View {
                         Toggle("Extra Napkings", isOn: $viewModel.user.hasExtraNapkins)
                         Toggle("Frequent Refill", isOn: $viewModel.user.hasFrequentRefill)
                     }
-                    .tint(.brandPrimary)
+                    .tint(.accentColor)
                 }
             }
             .navigationTitle("Account")
