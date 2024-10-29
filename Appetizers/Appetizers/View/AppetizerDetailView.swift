@@ -48,7 +48,7 @@ struct AppetizerDetailView: View {
 }
 
 #Preview {
-    var order = Order()
+    let order = Order()
     
     AppetizerDetailView(appetizer: MockData.sampleAppetizer)
         .environmentObject(order)

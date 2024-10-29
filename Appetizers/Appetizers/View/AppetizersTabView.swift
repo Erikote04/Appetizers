@@ -28,7 +28,7 @@ struct AppetizersTabView: View {
 }
 
 #Preview {
-    var order = Order()
+    let order = Order()
     
     AppetizersTabView()
         .environmentObject(order)

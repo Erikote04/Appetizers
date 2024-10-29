@@ -35,7 +35,7 @@ struct OrderView: View {
 }
 
 #Preview {
-    var order = Order()
+    let order = Order()
     
     OrderView()
         .environmentObject(order)

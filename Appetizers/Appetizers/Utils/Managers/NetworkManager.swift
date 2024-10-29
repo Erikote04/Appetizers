@@ -8,7 +8,7 @@
 import UIKit
 
 protocol NetworkManagerProtocol {
-    func getAppetizers(completion: @escaping (Result<[AppetizerItem], AppetizersError>) -> Void)
+    func getAppetizers() async throws -> [AppetizerItem]
 }
 
 final class NetworkManager: NetworkManagerProtocol {
@@ -19,37 +19,16 @@ final class NetworkManager: NetworkManagerProtocol {
     
     private init() {}
     
-    func getAppetizers(completion: @escaping (Result<[AppetizerItem], AppetizersError>) -> Void) {
-        guard let url = URL(string: NetworkManager.baseURL) else {
-            completion(.failure(.invalidURL))
-            return
-        }
+    func getAppetizers() async throws -> [AppetizerItem] {
+        guard let url = URL(string: NetworkManager.baseURL) else { throw AppetizersError.invalidURL }
         
-        let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, response, error in
-            if let _ = error {
-                completion(.failure(.enableToConnect))
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completion(.failure(.invalidResponse))
-                return
-            }
-            
-            guard let data = data else {
-                completion(.failure(.invalidData))
-                return
-            }
-            
-            do {
-                let appetizers = try JSONDecoder().decode(AppetizerResponse.self, from: data)
-                completion(.success(appetizers.request))
-            } catch {
-                completion(.failure(.invalidData))
-            }
-        }
+        let (data, _) = try await URLSession.shared.data(from: url)
         
-        task.resume()
+        do {
+            return try JSONDecoder().decode(AppetizerResponse.self, from: data).request
+        } catch {
+            throw AppetizersError.invalidData
+        }
     }
     
     func downloadImage(url: String, completion: @escaping (UIImage?) -> Void) {
