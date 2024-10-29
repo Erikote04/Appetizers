@@ -12,11 +12,16 @@ struct AppetizerListRowView: View {
     
     var body: some View {
         HStack {
-            AppetizerRemoteImage(url: appetizer.imageURL)
-                .scaledToFit()
-                .clipShape(.rect(cornerRadius: 8))
-                .frame(width: 120, height: 90)
-            
+            AsyncImage(url: URL(string: appetizer.imageURL)) { image in
+                image
+                    .resizable()
+                    .listRowImage()
+            } placeholder: {
+                Image("food-placeholder")
+                    .resizable()
+                    .listRowImage()
+            }
+
             VStack(alignment: .leading, spacing: 4) {
                 Text(appetizer.name)
                     .font(.headline)
