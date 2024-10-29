@@ -24,6 +24,10 @@ struct OrderView: View {
                 PrimaryButton(text: "Pay") {
                     // place order
                 }
+                
+                if orderItems.isEmpty {
+                    EmptyState(imageName: "empty-order", message: "You have no items in your order.\nPlease add an appetizer.")
+                }
             }
             .navigationTitle("Order")
         }
