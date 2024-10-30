@@ -18,10 +18,10 @@ final class AppetizersViewModel: ObservableObject {
     @Published var isShowingDetail: Bool = false
     
     // MARK: Properties
-    private let networkManager: NetworkManager
+    private let networkManager: NetworkManagerProtocol
     
     // MARK: Life cycle
-    init(networkManager: NetworkManager = .shared) {
+    init(networkManager: NetworkManagerProtocol = NetworkManager()) {
         self.networkManager = networkManager
     }
     

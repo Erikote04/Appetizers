@@ -17,7 +17,7 @@ final class NetworkManager: NetworkManagerProtocol {
     
     private let cache = NSCache<NSString, UIImage>()
     
-    private init() {}
+    init() {}
     
     func getAppetizers() async throws -> [AppetizerItem] {
         guard let url = URL(string: NetworkManager.baseURL) else { throw AppetizersError.invalidURL }
