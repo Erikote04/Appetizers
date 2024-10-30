@@ -1,7 +1,7 @@
 
 # Appetizers
 
-Appetizers is a take-home app developed by @SAllen0400 that covers the basics of SwiftUI. It's a good project to learn how this framework works, API requests with async/await, MVVM architecture, reusable components, etc. You can watch the progress commit by commit or follow the tutorial I have left in the description of the project
+Appetizers is a take-home app developed by @SeanAllen that covers the basics of SwiftUI. It's a good project to learn how this framework works, API requests with async/await, MVVM architecture, reusable components, etc. You can watch the progress commit by commit or follow the tutorial I have left in the description of the project
 
 <p float="left">
 <img src="Screenshots/AppetizersView.png" alt="Appetizers View" width="175">
